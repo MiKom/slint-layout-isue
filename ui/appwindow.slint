@@ -1,17 +1,35 @@
+
 import { Button, VerticalBox } from "std-widgets.slint";
 
-export component AppWindow inherits Window {
-    in-out property<int> counter: 42;
-    callback request-increase-value();
+component Page inherits VerticalBox {
+    VerticalLayout {
+        alignment: start;
+        Text { text: "title";}
+        Rectangle {
+            height: 6px;
+            background: lightgray;
+            border-radius: 3px;
+        }
+        @children
+    }
+}
+
+component MyPage inherits Page {
     VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
-        }
-     }
+        Text { text: "Page content"; }
+    }
+}
+
+export component AppWindow {
+    min-width: 800px;
+    min-height: 600px;
+    sidebar := Rectangle {
+        x: 0;
+        width: 150px;
+        background: gray;
+    }
+    my-page  := MyPage {
+        x: sidebar.x + sidebar.width;
+        width: root.width - sidebar.width;
+    }
 }
